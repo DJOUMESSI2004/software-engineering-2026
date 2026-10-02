@@ -1,0 +1,124 @@
+# Docker
+
+## What I am learning
+
+Containerization from first principles: what a container really is, how images are built in layers, how containers get storage, networking, and configuration, and how to package and run an application reproducibly.
+
+## Why it matters
+
+"It works on my machine" is the problem containers solve. Docker is also the foundation for CI/CD pipelines, cloud deployment, and Kubernetes. A container is a Linux process with isolation, so the Linux and Networking topics pay off directly here.
+
+> **Goal:** understand what an application needs to run and package it reproducibly.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain what a container is, and how it differs from a virtual machine
+- Explain how isolation works (namespaces, cgroups) at a conceptual level
+- Explain images, layers, registries, and tags
+- Write a clear Dockerfile and explain every instruction
+- Use layer caching to speed up builds
+- Persist data with volumes and bind mounts
+- Connect containers with Docker networks and explain how they find each other
+- Pass configuration with environment variables without baking secrets into images
+- Run multi-container applications with Docker Compose
+- Build small, safer images with multi-stage builds
+- Apply basic container security (non-root user, minimal base image, no secrets in layers)
+- Debug a container that exits, hangs, or cannot be reached
+
+---
+
+## Weekly progression
+
+| Week | Focus | Key commands |
+|---|---|---|
+| 1 | Containers and images: what they are, running and inspecting them | `run` `ps` `logs` `exec` `inspect` `stop` `rm` |
+| 2 | Dockerfiles, layers, caching, and the build context | `build` `history` `tag` `push`, `.dockerignore` |
+| 3 | Volumes, networks, and configuration | `volume` `network`, `-e`, `--env-file`, `-p` |
+| 4 | Docker Compose and the Stage 3 stack (backend, database, Redis) | `compose up` `compose down` `compose logs` |
+| 5 | Multi-stage builds, image size, and container security | `scan`, non-root users, minimal base images |
+| 6 | Debugging labs and mini-project | `logs` `exec` `inspect` `stats` `events` |
+
+This topic delivers Stage 3 of the main project: the backend, the database, and Redis running together under Docker Compose.
+
+---
+
+## Checklist
+
+- [ ] Explain container versus virtual machine
+- [ ] Explain namespaces and cgroups at a high level
+- [ ] Run, stop, inspect, and remove containers
+- [ ] Explain images, layers, and tags
+- [ ] Write a Dockerfile for the backend
+- [ ] Explain `CMD` versus `ENTRYPOINT` and `COPY` versus `ADD`
+- [ ] Order Dockerfile instructions to use the build cache well
+- [ ] Use `.dockerignore`
+- [ ] Persist database data with a volume
+- [ ] Explain volumes versus bind mounts
+- [ ] Connect two containers through a user-defined network
+- [ ] Explain port publishing (`-p`) and what it does
+- [ ] Pass configuration with environment variables
+- [ ] Keep secrets out of images and layers
+- [ ] Write a Compose file for backend, database, and Redis
+- [ ] Use health checks and startup ordering correctly
+- [ ] Build a multi-stage image and compare sizes
+- [ ] Run a container as a non-root user
+- [ ] Debug a container that exits immediately
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Exercises
+
+- [ ] Run a container, find its process on the host, and relate it to what I learned in Linux
+- [ ] Write a Dockerfile for a small app, then reorder it to improve cache hits and measure the difference
+- [ ] Delete a container with a database and show data surviving with a volume and disappearing without one
+- [ ] Put two containers on a network and reach one from the other by name
+- [ ] Add `.dockerignore` and show how it changes the build context size
+- [ ] Convert a single-stage build to multi-stage and compare image sizes
+- [ ] Inspect an image's history and find what each layer added
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Container exits immediately:** find out why with logs and exit code, and fix it
+- [ ] **Unreachable service:** the app runs in a container but the browser cannot reach it (binding versus port publishing, linking back to Networking)
+- [ ] **Backend cannot reach the database:** connection refused, find whether it is the hostname, network, or startup order
+- [ ] **Data lost:** a database loses its data after a restart, find the missing volume
+- [ ] **Leaked secret:** a secret is baked into an image layer, find it, remove it, and explain why rotating it still matters
+- [ ] **Huge image:** an image is over one gigabyte, shrink it and explain each saving
+
+## Mini-project: Multi-container application
+
+The main project's Stage 3 stack, packaged and documented:
+
+- A Dockerfile for the backend using a multi-stage build and a non-root user
+- A Compose file with backend, PostgreSQL, and Redis
+- A named volume for the database
+- Health checks, so the backend starts only when the database is ready
+- Configuration through environment variables and an `.env.example` file, with real secrets never committed
+- A README with how to run, test, and debug the stack
+- An ADR for the main choices (base image, Compose layout)
+
+---
+
+## Resources
+
+- *Docker Deep Dive*: Nigel Poulton
+- Official Docker documentation
+- Linux manual pages on namespaces and cgroups
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can containerize an unfamiliar app without a tutorial
+- [ ] I can debug a failing container using evidence
+- [ ] The mini-project runs with a single `docker compose up` on a clean machine
+- [ ] No secrets are present in the repository or in image layers
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

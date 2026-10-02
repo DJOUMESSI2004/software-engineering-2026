@@ -91,7 +91,7 @@ Each lab ends with a written note: situation, constraints, options, decision, co
 
 ## Case studies
 
-Written analyses of real or realistic systems, stored in .
+Written analyses of real or realistic systems, stored in `case-studies/`.
 
 - [ ] A company that moved from a monolith to microservices, and what it cost
 - [ ] A company that moved back, or chose a modular monolith deliberately
@@ -102,9 +102,14 @@ Each case study covers: context, architecture, trade-offs, what failed or would 
 
 ## Architecture Decision Records
 
-ADRs live in :
+ADRs live in `decisions/`:
 
-
+```text
+ADR-001-modular-monolith.md
+ADR-002-postgresql.md
+ADR-003-redis.md
+ADR-004-message-queue.md
+```
 
 Each ADR answers four questions: **Context**, **Decision**, **Alternatives**, **Consequences**. The goal is to show the reasoning, not only the technology name.
 

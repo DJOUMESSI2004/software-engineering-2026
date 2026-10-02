@@ -1,0 +1,158 @@
+# CI/CD
+
+## What I am learning
+
+How software moves from a Git commit to a running application: automated tests, build pipelines, artifacts, environments, deployment strategies, secrets, rollback, and pipeline security.
+
+I already have practical experience with Jenkins. This topic uses it as a starting point and connects it to the concepts underneath, so that the knowledge transfers to any CI/CD tool.
+
+## Why it matters
+
+Manual builds and deployments are slow, inconsistent, and risky. A good pipeline makes every change pass the same quality gates, produces the same artifact every time, and makes deployment and rollback routine instead of stressful. The pipeline is also a high-value attack target, so its security matters.
+
+> **Goal:** understand the complete path from Git commit to running application.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain continuous integration, continuous delivery, and continuous deployment, and how they differ
+- Design a pipeline with clear stages and quality gates
+- Run automated tests, linting, and security checks on every change
+- Build a container image in the pipeline and tag it traceably
+- Store and version artifacts in a registry
+- Manage separate environments (development, staging, production) and their configuration
+- Handle secrets safely in a pipeline
+- Explain deployment strategies (recreate, rolling, blue/green, canary) and their trade-offs
+- Roll back a bad release quickly
+- Explain pipeline security risks and mitigations
+- Express the same pipeline in two different tools to separate concepts from syntax
+
+---
+
+## Weekly progression
+
+| Week | Focus |
+|---|---|
+| 1 | Concepts: CI versus CD, pipeline stages, quality gates; map my existing Jenkins knowledge to these concepts |
+| 2 | Jenkins pipeline as code (`Jenkinsfile`): checkout, test, build, with tests required to pass |
+| 3 | Docker in the pipeline: build, tag, scan, and push an image to a registry |
+| 4 | Git-based CI: rebuild the same pipeline in a hosted tool (for example GitHub Actions) and compare |
+| 5 | Environments, secrets, and configuration management |
+| 6 | Deployment strategies and rollback |
+| 7 | Pipeline security and mini-project |
+| 8 | Review, and connect the pipeline to the main project |
+
+This topic delivers Stage 4 of the main project: Git, then CI pipeline, tests, build, container image, and deployment.
+
+---
+
+## Checklist
+
+- [ ] Explain CI, continuous delivery, and continuous deployment
+- [ ] Explain what a quality gate is and give examples
+- [ ] Write a pipeline as code in Jenkins
+- [ ] Run unit and integration tests in the pipeline and fail the build on failure
+- [ ] Add linting and a dependency vulnerability scan
+- [ ] Build a Docker image in the pipeline
+- [ ] Tag images with the commit hash instead of only `latest`
+- [ ] Push an image to a registry
+- [ ] Rebuild the pipeline in a second tool and compare the two
+- [ ] Separate configuration per environment
+- [ ] Store secrets in the CI secret store, never in the repository or in logs
+- [ ] Explain rolling, blue/green, and canary deployments
+- [ ] Roll back a release
+- [ ] Explain why builds should be reproducible
+- [ ] Explain pipeline security risks (leaked secrets, untrusted pull requests, compromised dependencies)
+- [ ] Trace a commit all the way to the running application
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## The pipeline I am building
+
+```text
+Git push
+   ↓
+Checkout
+   ↓
+Lint + unit tests
+   ↓
+Build
+   ↓
+Integration tests
+   ↓
+Security scan (dependencies, image)
+   ↓
+Build and tag container image (commit hash)
+   ↓
+Push to registry
+   ↓
+Deploy to staging
+   ↓
+Smoke test
+   ↓
+Deploy to production (approval or automatic)
+   ↓
+Health check, with automatic rollback on failure
+```
+
+---
+
+## Exercises
+
+- [ ] Write a `Jenkinsfile` with stages for checkout, test, and build
+- [ ] Make the pipeline fail when one unit test fails, then fix it
+- [ ] Cache dependencies and measure the build-time difference
+- [ ] Tag an image with the short commit hash and find which commit produced a running container
+- [ ] Rebuild the same pipeline in a second CI tool and write down what changed and what stayed the same
+- [ ] Add a secret to the CI secret store and use it without printing it
+- [ ] Add a manual approval step before production
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Works locally, fails in CI:** find the environment difference (version, missing variable, file path)
+- [ ] **Flaky pipeline:** a test or step fails intermittently, find the cause rather than re-running
+- [ ] **Leaked secret in logs:** a secret appears in build output, find it, fix it, and explain why rotating it matters
+- [ ] **Bad release:** a deployment passes the pipeline but breaks production, detect it with a health check and roll back
+- [ ] **Untrusted pull request:** show how a pipeline can be abused by code from a fork and how to restrict it
+- [ ] **Slow pipeline:** find the slowest stage and speed it up with evidence
+
+## Mini-project: End-to-end pipeline for the main project
+
+A pipeline for the main project that includes:
+
+- Automated lint, unit tests, and integration tests
+- A dependency and image vulnerability scan
+- A container image tagged with the commit hash and pushed to a registry
+- Deployment to a staging environment, then production
+- A smoke test and health check after each deployment
+- A documented, tested rollback procedure
+- Secrets handled only through the CI secret store
+- The pipeline defined as code in the repository
+- A README with a diagram of the full flow, from commit to running application
+- An ADR for the CI tool and deployment strategy
+
+---
+
+## Resources
+
+- Official documentation of Jenkins and of the second CI tool chosen
+- Official Docker documentation (build and registry)
+- OWASP CI/CD security guidance
+- *Pro Git*: Scott Chacon and Ben Straub (for the Git-based workflow side)
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can write a working pipeline in two tools without a tutorial
+- [ ] I can trace any running version back to its commit
+- [ ] I can roll back a release and show how long it takes
+- [ ] The mini-project pipeline runs on every push and no secrets are in the repository or logs
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

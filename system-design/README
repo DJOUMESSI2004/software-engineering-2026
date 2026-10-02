@@ -1,0 +1,139 @@
+# System Design
+
+## What I am learning
+
+How to reason about systems at larger scale: how to turn requirements into a design, which building blocks to use, and what each choice costs in latency, availability, consistency, and complexity.
+
+## Why it matters
+
+Architecture decides how code is organized inside a service. System design decides how services, data stores, caches, and queues fit together under load and failure. It is also how I will explain and defend technical decisions, in my own project and in interviews.
+
+> **Goal:** be able to take requirements and design a system while explaining its trade-offs.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Turn vague requirements into functional and non-functional requirements
+- Estimate load (requests per second, storage, bandwidth) with back-of-the-envelope math
+- Explain scalability, availability, reliability, latency, and throughput, and how they differ
+- Explain vertical versus horizontal scaling
+- Place load balancers, caches, queues, and replicas in a design and justify each
+- Explain replication, partitioning, and consistency trade-offs, including CAP-related trade-offs
+- Explain fault tolerance and design for failure
+- Make operations safe to repeat with idempotency
+- Apply rate limiting, retries with backoff, timeouts, and circuit breakers
+- Present a design clearly, with diagrams and explicit trade-offs
+
+---
+
+## Weekly progression
+
+| Week | Focus |
+|---|---|
+| 1 | Requirements, estimation, and the core vocabulary (latency, throughput, availability) |
+| 2 | Scaling: load balancing, stateless services, caching layers |
+| 3 | Data at scale: replication, partitioning, consistency, CAP-related trade-offs |
+| 4 | Asynchronous design: queues, workers, delivery guarantees, idempotency |
+| 5 | Resilience: timeouts, retries, backoff, rate limiting, circuit breakers |
+| 6 | Case studies, first half: design systems end to end |
+| 7 | Case studies, second half and apply the lessons to the main project |
+| 8 | Review and timed practice without notes |
+
+This topic runs alongside Architecture. It prepares the distributed stage of the main project (Stage 6), but nothing is split until a concrete reason exists.
+
+---
+
+## Checklist
+
+- [ ] Separate functional from non-functional requirements
+- [ ] Do a back-of-the-envelope estimate (traffic, storage, bandwidth)
+- [ ] Explain latency versus throughput
+- [ ] Explain availability and how it is measured (nines)
+- [ ] Explain vertical versus horizontal scaling
+- [ ] Explain why stateless services scale more easily
+- [ ] Explain load balancing strategies (round robin, least connections, hashing)
+- [ ] Choose and justify a caching strategy (aside, write-through, write-back) and its invalidation
+- [ ] Explain replication (leader/follower) and replication lag
+- [ ] Explain partitioning and how to choose a partition key
+- [ ] Explain consistency models and CAP-related trade-offs
+- [ ] Explain message queues and delivery guarantees (at-most, at-least, exactly-once)
+- [ ] Design an idempotent operation
+- [ ] Apply timeouts, retries with backoff, and jitter
+- [ ] Explain rate limiting algorithms (token bucket, sliding window)
+- [ ] Explain the circuit breaker pattern
+- [ ] Identify single points of failure
+- [ ] Present a design and defend its trade-offs
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## A repeatable design method
+
+Use the same steps for every design problem:
+
+```text
+1. Clarify requirements          what must it do, and for whom?
+2. Define non-functional needs   scale, latency, availability, consistency
+3. Estimate load                 requests, data size, growth
+4. Sketch the simplest design    start with one service and one database
+5. Find the bottleneck           what fails first as load grows?
+6. Add components deliberately   cache, queue, replica, partition, each with a reason
+7. Plan for failure              what happens when each part is down or slow?
+8. State the trade-offs          what did this design give up?
+```
+
+Always start with the simplest design that meets the requirements and add complexity only when a requirement demands it.
+
+---
+
+## Exercises
+
+- [ ] Estimate daily traffic, storage, and peak requests per second for three products
+- [ ] Compute the availability of two services in series versus in parallel
+- [ ] Implement a token-bucket rate limiter and test it
+- [ ] Implement retries with exponential backoff and jitter, and show why plain retries can make an outage worse
+- [ ] Make a payment-style endpoint idempotent with an idempotency key
+- [ ] Choose a partition key for an orders table and show one query that becomes expensive
+- [ ] Draw the request path of a read through a load balancer, cache, and database
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Cache stampede:** many requests hit the database when a hot key expires, reproduce and mitigate it
+- [ ] **Retry storm:** a failing dependency is overloaded by retries, add backoff and a circuit breaker
+- [ ] **Duplicate processing:** a queue delivers a message twice, make the consumer idempotent
+- [ ] **Replica lag:** a user writes and then reads stale data, explain it and choose a fix
+- [ ] **Load test:** run a load test on the backend, find the first bottleneck, and fix it with evidence
+
+## Case studies
+
+Written designs stored in `case-studies/`. Each follows the design method above and ends with a trade-off summary.
+
+- [ ] URL shortener
+- [ ] Rate limiter service
+- [ ] Notification system (email, push, retries)
+- [ ] Order processing for the e-commerce project (inventory, payment, idempotency)
+- [ ] News feed or chat system (read-heavy versus write-heavy)
+
+---
+
+## Resources
+
+- *Designing Data-Intensive Applications*: Martin Kleppmann
+- *System Design Interview*: Alex Xu
+- *Fundamentals of Software Architecture*: Mark Richards and Neal Ford
+- Engineering blogs of companies that publish design write-ups
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can take a new problem and produce a design with explicit trade-offs, without notes
+- [ ] At least five case studies are written
+- [ ] I implemented rate limiting, retries with backoff, and idempotency myself
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

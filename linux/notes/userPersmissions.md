@@ -16,7 +16,7 @@ a user has the right to execution, writing, and reading if the file has all this
 
 commands for user and permissions
 - chmod : change file permission. e.g chmod -r file.txt
-- chown : change file owner. e.g chown file wilfrid
+- chown : change file owner. e.g chown <fileDirectory> wilfrid
 
 ## MINDSET TO HAVE
 
@@ -56,7 +56,7 @@ this is perfect for real login session
 
 we create restricted user when we need a user with no login session. this is particulary for system services such as database, server etc
 
-cmd: 'sudo useradd -r -s /usr/sbin/nologin <userServiceUniqueName>.
+cmd: `sudo useradd -r -s /usr/sbin/nologin <userServiceUniqueName>`.
 
 this will create a no shell, no login user with a minimum priviledge.
 
@@ -69,6 +69,9 @@ cmd :
 - add user to a group : `sudo usermod -aG <groupName> <existingUserName>`
 - see all users : `cat /etc/passwd` || `cut -d: f1 /etc:passwd`
 - see all group : `cat /etc/group` || `cut -d: -f1 /etc/group`
+- see user of particular group : `getent group <groupName>`
+- create sudo user : `sudo usermod -aG sudo <userName>`
+
 
 
 ### III. Permisson (chmod). When and Why
@@ -88,6 +91,35 @@ e.g test.sh = rwx-rw-r-- (764) is interpreted as the owner has all access, group
 1. making fiel executable : chmod +x <filename>
 2. secure private file : chmod 600 <fileName>
 3. complet folder with full permissions : chmod chmod -R <role(e.g: 770)> <folderNAme>
+
+### IV. Ownership (chown, chgrp) when and why
+
+in linux we can grant ownership of folders, files
+
+- in case i need a file to belong to a particular group  user, i can grant them ownership of  file or folder. 
+- we also use it to resolve permission denied messages 
+- create a shared folder, file
+
+1. give ownership to user : `sudo chown <userName> <fileName>`
+2. ownership to group : `sudo chgrp <groupName> <fileDirectory>`
+3. changing bob user and group : `sudo chown user:group filedirectory`
+
+note : tha above command ownership of the identified fileDirectory and not the content. add `-R` to include the content. e.g : `sudo chown -R user fileDirectory` || `sudo chgrp -R group fileDirectory`
+
+
+### V. Attributes (usermod)
+
+usermod command is user to modify user data
+
+cases :
+- add user to a group : `sudo usermod -aG groupName userName`
+- give user admin priviledge : `sudo usermod -aG sudo userName`
+- lock/unlock user : `sudo usermod -L userName`
+- to rename the user 
+etc
+
+
+
 
 
 

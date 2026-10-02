@@ -1,0 +1,158 @@
+# Security
+
+## What I am learning
+
+How applications and infrastructure fail from a security perspective, and how to prevent, detect, and limit those failures: authentication, authorization, sessions and tokens, password storage, secrets, TLS, input validation, the common web vulnerabilities, dependency and container risks, least privilege, the OWASP Top 10, and basic threat modeling.
+
+## Why it matters
+
+Security is not a final chapter. Every earlier topic introduced a security decision: file permissions in Linux, leaked secrets in Git, open ports in Networking, authorization in Backend, SQL injection in Databases, secrets in Docker images, pipeline credentials in CI/CD, IAM in Cloud. This topic collects those decisions, names the underlying principles, and makes them systematic.
+
+> **Goal:** understand the major ways applications and infrastructure fail from a security perspective.
+
+> **Integration rule:** security work happens in every topic, not only here. This topic is where the scattered lessons are reviewed, connected, and tested against the main project.
+
+---
+
+## Practice rules
+
+Security practice only happens on systems I own or have explicit permission to test.
+
+```text
+1. Attack only my own code, my own containers, and my own lab environments.
+2. Use intentionally vulnerable practice applications run locally, never real sites.
+3. Never run tests against a cloud account, network, or application I do not own.
+4. Never commit real credentials, even in a lab. Use fake secrets.
+5. Document findings as lessons and fixes, not as attack recipes.
+```
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain the difference between authentication and authorization, and the common ways each fails
+- Store passwords correctly (salted, slow hashing) and explain why
+- Explain sessions and JWTs, their trade-offs, and common mistakes
+- Manage secrets safely across code, CI/CD, containers, and the cloud
+- Explain how TLS protects data in transit and what it does not protect
+- Validate and encode input and output to prevent injection
+- Explain SQL injection, XSS, CSRF, and SSRF, and how each is prevented
+- Identify vulnerable dependencies and respond to them
+- Harden containers and explain least privilege at every layer
+- Walk through the OWASP Top 10 and map each item to my project
+- Run a basic threat modeling session and rank risks
+- Respond to a leaked credential
+
+---
+
+## Weekly progression
+
+| Week | Focus | Where it first appeared |
+|---|---|---|
+| 1 | Principles: least privilege, defense in depth, trust boundaries, threat modeling basics | Architecture |
+| 2 | Authentication: password hashing, sessions, JWT, multi-factor authentication | Backend |
+| 3 | Authorization: access control models, broken access control, ownership checks | Backend |
+| 4 | Input handling: SQL injection, XSS, CSRF, SSRF, validation and output encoding | Databases, Backend |
+| 5 | Secrets and supply chain: secrets management, dependency vulnerabilities, image scanning, pipeline security | Git, Docker, CI/CD |
+| 6 | Infrastructure: TLS, network exposure, cloud IAM, container and Kubernetes hardening | Networking, Cloud, Kubernetes |
+| 7 | OWASP Top 10 review and a security review of the main project | |
+| 8 | Threat model, incident response lab, final review | |
+
+---
+
+## Checklist
+
+- [ ] Explain authentication versus authorization
+- [ ] Hash passwords with a slow, salted algorithm and explain why plain or fast hashes fail
+- [ ] Explain how sessions and JWTs work and where each is risky
+- [ ] Implement rate limiting on login to slow brute-force attempts
+- [ ] Explain and fix broken access control (accessing another user's data by changing an ID)
+- [ ] Explain SQL injection and fix it with parameterized queries
+- [ ] Explain XSS and prevent it with output encoding
+- [ ] Explain CSRF and how tokens and cookie settings prevent it
+- [ ] Explain SSRF and how to restrict outbound requests
+- [ ] Validate input on the server, never only on the client
+- [ ] Store secrets outside the code and outside Git
+- [ ] Explain TLS: what it protects and what it does not
+- [ ] Scan dependencies and an image for known vulnerabilities and triage the results
+- [ ] Run containers as non-root with minimal permissions
+- [ ] Apply least privilege to cloud roles and database users
+- [ ] Add security headers and explain each one
+- [ ] Walk through the OWASP Top 10 and map each item to my project
+- [ ] Build a basic threat model for the main project
+- [ ] Rotate a leaked credential and explain why deleting the commit is not enough
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## A basic threat modeling method
+
+Use this on any feature or system:
+
+```text
+1. What am I protecting?        data, accounts, availability, money
+2. Who might attack it?         anonymous user, authenticated user, insider, compromised dependency
+3. Where are the trust boundaries?  browser to server, service to service, server to database, pipeline to cloud
+4. What can go wrong at each boundary?  spoofing, tampering, leaking, denial of service, privilege escalation
+5. What controls exist?         authentication, validation, encryption, logging, limits
+6. What is the remaining risk, and what do I do about it?  fix, reduce, accept, document
+```
+
+---
+
+## Exercises
+
+- [ ] Compare hashing a password with a fast hash versus a slow salted hash and explain the difference in attack cost
+- [ ] Implement login with rate limiting and a lockout or delay strategy
+- [ ] Write a parameterized query and show that the string-concatenated version is exploitable on my local test database
+- [ ] Render user input safely and show the unsafe version executing a script in my local test page
+- [ ] Add CSRF protection and secure cookie settings to a form
+- [ ] Add security headers and check them with a scanner against my local app
+- [ ] Run a dependency scanner and an image scanner and triage each finding by real risk
+- [ ] Write a `.gitignore` and a pre-commit check that blocks obvious secrets
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, root cause, fix, lesson. All run only on local practice environments.
+
+- [ ] **Broken access control:** one user can read another user's order by changing an ID, find it and fix it
+- [ ] **Injection:** find and fix a SQL injection in a deliberately vulnerable endpoint
+- [ ] **Stored XSS:** find and fix a place where user content is rendered unsafely
+- [ ] **Leaked secret:** a fake credential is committed and pushed, revoke it, clean up, and add prevention
+- [ ] **Vulnerable dependency:** a scanner reports a critical issue, decide whether it is exploitable and fix it
+- [ ] **Over-privileged role:** a cloud role or database user has far more access than needed, reduce it safely
+- [ ] **Exposed service:** a container or database is reachable from outside, find it and close it (linking to Networking and Docker)
+
+## Case studies
+
+Written analyses stored in `case-studies/`. Each covers: what happened, the root cause, which control was missing, and what I would check in my own project.
+
+- [ ] A public breach caused by broken access control
+- [ ] A public breach caused by a leaked or over-privileged credential
+- [ ] A supply chain incident involving a compromised dependency or build pipeline
+- [ ] A misconfigured cloud storage or database exposure
+- [ ] The main project's own threat model and top five risks
+
+---
+
+## Resources
+
+- OWASP Top 10 and the OWASP Cheat Sheet Series
+- OWASP Application Security Verification Standard
+- Official documentation of the chosen framework's security features
+- Cloud provider security best-practice guides
+- Intentionally vulnerable practice applications run locally
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can fix each of the common web vulnerabilities in my own code
+- [ ] I can explain how my project handles every OWASP Top 10 category
+- [ ] A threat model for the main project exists and its top risks have owners or fixes
+- [ ] No real secrets are in the repository, the images, or the pipeline logs
+- [ ] At least three case studies are written
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

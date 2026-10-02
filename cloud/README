@@ -1,0 +1,146 @@
+# Cloud
+
+## What I am learning
+
+Cloud infrastructure as a set of transferable concepts: compute, networking, storage, managed databases, identity and access, load balancing, autoscaling, monitoring, and cost. The platforms used for practice are AWS and Azure, but the priority is understanding what each service does and why, not memorizing console buttons.
+
+## Why it matters
+
+Most production systems run in the cloud, and most cloud incidents come from a few causes: networking misconfiguration, overly broad permissions, and unexpected cost. The Linux, Networking, and Docker topics all apply directly: a virtual machine is a Linux server, a security group is a firewall, and a container service runs the images built in the pipeline.
+
+> **Goal:** understand cloud infrastructure well enough to deploy, secure, and operate the main project, and to transfer that knowledge between providers.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain the cloud service models (IaaS, PaaS, SaaS) and the shared responsibility model
+- Create and connect to a virtual machine, and explain what I am paying for
+- Design a network with a virtual network, public and private subnets, and routing
+- Control traffic with security groups or firewalls and explain least privilege for network access
+- Explain object, block, and file storage and when each is used
+- Use a managed database and explain what the provider handles and what I still own
+- Manage identity and access: users, roles, policies, and least privilege
+- Put a load balancer in front of an application and configure health checks
+- Configure DNS and TLS certificates for a public endpoint
+- Explain autoscaling and what it needs to work (stateless services, good health checks)
+- Monitor resources and set alerts
+- Estimate, track, and reduce cost
+- Explain which concepts are the same on AWS and Azure and which names differ
+
+---
+
+## Weekly progression
+
+| Week | Focus | AWS / Azure examples |
+|---|---|---|
+| 1 | Cloud concepts, account setup, billing alerts, and IAM basics | IAM / Entra ID and RBAC |
+| 2 | Compute: virtual machines, SSH access, and instance sizing | EC2 / Virtual Machines |
+| 3 | Networking: virtual networks, subnets, routing, security groups, and NAT | VPC / Virtual Network, security groups / NSGs |
+| 4 | Storage and managed databases | S3 / Blob Storage, RDS / Azure Database for PostgreSQL |
+| 5 | Load balancing, DNS, TLS, and autoscaling | ALB / Application Gateway, Route 53 / Azure DNS |
+| 6 | Deploy the main project (Stage 5) end to end | Container service or VM-based deployment |
+| 7 | Monitoring, alerting, cost control, and cleanup | CloudWatch / Azure Monitor, cost tools |
+| 8 | Mini-project, review, and a provider comparison | |
+
+This topic delivers Stage 5 of the main project: internet, load balancer, application, database, and cache.
+
+---
+
+## Checklist
+
+- [ ] Explain IaaS, PaaS, and SaaS
+- [ ] Explain the shared responsibility model
+- [ ] Set up billing alerts before creating any resource
+- [ ] Create a user or role with least-privilege permissions, and never use the root account for daily work
+- [ ] Launch a virtual machine and connect with SSH keys
+- [ ] Explain virtual network, subnet, route table, and gateway
+- [ ] Explain public versus private subnets
+- [ ] Write security group rules that open only what is needed
+- [ ] Explain NAT and why private resources still reach the internet
+- [ ] Explain object versus block storage
+- [ ] Create a managed database in a private subnet
+- [ ] Explain what a managed database handles (backups, patching) and what stays my job
+- [ ] Configure a load balancer with health checks
+- [ ] Point a DNS name at the application and enable HTTPS
+- [ ] Explain what autoscaling needs in order to work
+- [ ] Set up monitoring and an alert
+- [ ] Read a cost report and find the most expensive resource
+- [ ] Tear down everything and confirm nothing is still billing
+- [ ] Map one service from AWS to its Azure equivalent
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Safety rules for cloud practice
+
+Cloud mistakes can cost money or expose data, so these rules apply to every lab:
+
+```text
+1. Set a billing alert and a budget before creating anything.
+2. Never use the root or global admin account for daily work. Enable MFA on it.
+3. Never commit access keys. Prefer roles and short-lived credentials.
+4. Never open a database or SSH to the whole internet (0.0.0.0/0).
+5. Tag every resource with the lab name so it can be found and deleted.
+6. Tear down at the end of every session and verify.
+```
+
+---
+
+## Exercises
+
+- [ ] Create a budget alert and a least-privilege user, then test what that user cannot do
+- [ ] Launch a VM, SSH in, install a service, and reach it from outside
+- [ ] Draw a network diagram of a public subnet and a private subnet, then build it
+- [ ] Restrict SSH to my own IP and verify that other addresses are blocked
+- [ ] Upload a file to object storage and control who can read it
+- [ ] Connect the backend to a managed database that has no public address
+- [ ] Put two instances behind a load balancer and watch traffic alternate
+- [ ] Build the same VM on both AWS and Azure and write down the naming differences
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Cannot SSH to the VM:** check the key, security group, route, and the instance state, one layer at a time (linking to Networking)
+- [ ] **App reachable by IP but not by name:** diagnose DNS
+- [ ] **Backend cannot reach the managed database:** find whether it is the security group, subnet, or credentials
+- [ ] **Load balancer reports unhealthy targets:** find the health check or binding mistake
+- [ ] **Permission denied:** a role cannot do what it needs, fix the policy without making it broader than necessary
+- [ ] **Surprise bill:** find which resource caused a cost spike and prevent it
+
+## Mini-project: Deploy the main project to the cloud
+
+The main project running publicly, with:
+
+- A public load balancer with HTTPS, and a DNS name
+- The application running in private subnets
+- A managed PostgreSQL database that is not publicly accessible, and a cache
+- Least-privilege roles and no secrets in the repository
+- Security groups that allow only the required traffic
+- Monitoring and at least two alerts
+- A documented architecture diagram and a cost estimate
+- A teardown procedure that was tested
+- A short comparison of how the same design maps to AWS and Azure
+- An ADR for the deployment model (VM, container service, or other) and the provider
+
+---
+
+## Resources
+
+- Official AWS and Azure documentation and learning paths
+- AWS Well-Architected and Azure Well-Architected guidance
+- *Designing Data-Intensive Applications*: Martin Kleppmann (for replication and availability concepts)
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can deploy a small application to the cloud, securely, without a tutorial
+- [ ] I can debug an unreachable service layer by layer
+- [ ] The mini-project is deployed, documented, and has been torn down cleanly at least once
+- [ ] I can explain the same design in AWS and Azure terms
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written
