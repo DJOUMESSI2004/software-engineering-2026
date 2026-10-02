@@ -1,1473 +1,419 @@
 # Software Engineering 2026
 
-A structured, hands-on learning journey to become a production-ready software engineer in the AI era.
-
-This repository is not intended to be a collection of tutorials or copied code.
-
-The goal is to progressively build the fundamentals, engineering judgment, architecture knowledge, cloud/DevOps skills, security awareness, and AI-assisted development practices required to design, build, deploy, operate, and evolve real software systems.
-
----
-
-## 🎯 Main Objective
-
-By the end of this project, I want to be able to:
-
-* Understand how computers, operating systems, networks, and servers work.
-* Build production-quality backend applications.
-* Design and evolve software architectures.
-* Work confidently with relational and non-relational databases.
-* Containerize applications with Docker.
-* Build reliable CI/CD pipelines.
-* Deploy applications to the cloud.
-* Understand Kubernetes and distributed systems.
-* Apply fundamental application and infrastructure security.
-* Monitor and troubleshoot production systems.
-* Use AI coding agents effectively without becoming dependent on them.
-* Understand generated code rather than blindly accepting it.
-* Make technical decisions and explain the trade-offs behind them.
-* Design systems rather than simply implement tickets.
-* Build and document a serious end-to-end project.
-
-The final objective is not to memorize technologies.
+A structured, hands-on journey to become a production-ready software engineer in the AI era.
 
 > **The objective is to become an engineer who understands the system behind the code.**
 
----
-
-# 🧭 Learning Philosophy
-
-This project follows several principles.
-
-## 1. Fundamentals before tools
-
-Technologies change quickly.
-
-The fundamentals behind them change much more slowly.
-
-For example:
-
-* Learn networking before relying on cloud networking abstractions.
-* Learn processes and Linux before relying on containers.
-* Learn databases before relying on ORMs.
-* Learn HTTP before relying entirely on frameworks.
-* Learn architecture principles before blindly splitting applications into microservices.
-* Learn debugging before asking AI to fix everything.
+This repository is not a collection of tutorials or copied code. It is a record of how I build fundamentals, engineering judgment, architecture knowledge, cloud/DevOps skills, security awareness, and AI-assisted development practice.
 
 ---
 
-## 2. Learn by building
+## Table of Contents
 
-Each major topic should contain:
+1. [Goals](#1-goals)
+2. [Learning Philosophy](#2-learning-philosophy)
+3. [Roadmap](#3-roadmap)
+4. [Main Project](#4-main-project)
+5. [Repository Structure](#5-repository-structure)
+6. [Working Method](#6-working-method)
+7. [AI Usage Rules](#7-ai-usage-rules)
+8. [Weekly Rhythm and Review](#8-weekly-rhythm-and-review)
+9. [Definition of Done](#9-definition-of-done)
+10. [Resources](#10-resources)
+11. [Current Status](#11-current-status)
+
+---
+
+## 1. Goals
+
+By the end of this program I want to be able to:
+
+| Area | Outcome |
+|---|---|
+| Fundamentals | Understand how computers, operating systems, networks, and servers work |
+| Backend | Build production-quality backend applications |
+| Data | Work confidently with relational and non-relational databases |
+| Architecture | Design and evolve software architectures; explain trade-offs |
+| DevOps | Containerize with Docker, build CI/CD pipelines, deploy to the cloud |
+| Platform | Understand Kubernetes and distributed systems |
+| Security | Apply fundamental application and infrastructure security |
+| Operations | Monitor and troubleshoot production systems |
+| AI | Use coding agents effectively without depending on them; understand generated code |
+| Portfolio | Build and document a serious end-to-end project |
+
+The aim is not to memorize technologies, but to design systems rather than simply implement tickets.
+
+---
+
+## 2. Learning Philosophy
+
+### Fundamentals before tools
+
+Tools change quickly; fundamentals change slowly.
+
+- Networking before cloud networking abstractions
+- Processes and Linux before containers
+- Databases before ORMs
+- HTTP before frameworks
+- Architecture principles before microservices
+- Debugging before asking AI to fix everything
+
+### Learn by building
+
+Each major topic contains:
 
 ```text
-notes/
-exercises/
-labs/
-mini-project/
+notes/  exercises/  labs/  mini-project/
 ```
 
-The general progression is:
+The progression:
 
 ```text
-Understand
-   ↓
-Practice
-   ↓
-Break things
-   ↓
-Debug
-   ↓
-Build
-   ↓
-Document
-   ↓
-Explain
+Understand → Practice → Break things → Debug → Build → Document → Explain
 ```
 
 If I cannot explain something in my own words, I do not consider it mastered.
 
+### One evolving project over many toy projects
+
+A single main project grows through stages, so architectural decisions and trade-offs become practical instead of theoretical (see [Main Project](#4-main-project)).
+
 ---
 
-## 3. Prefer one evolving project over many toy projects
+## 3. Roadmap
 
-Instead of building dozens of unrelated tutorials, the main project will progressively evolve.
+| # | Phase | Topics | Goal |
+|---|---|---|---|
+| 1 | **Foundations** | Linux, Git, Networking | Operate and debug a Linux machine; work safely in a team repo; find where and why communication fails |
+| 2 | **Backend** | HTTP, REST, API design, auth, validation, error handling, config, DI, middleware, background jobs, caching, async, testing | Services that are understandable, testable, maintainable, deployable |
+| 3 | **Databases** | SQL, keys, indexes, constraints, transactions, ACID, isolation, normalization, query optimization, migrations (PostgreSQL); NoSQL, Redis, replication, partitioning, consistency | Choose storage by requirements, not trends |
+| 4 | **Architecture** | Modularity, coupling/cohesion, SOLID, layered/hexagonal/clean, modular monolith, microservices, event-driven, DDD basics | Structure systems that evolve. *Microservices are not automatically better.* |
+| 5 | **System Design** | Scalability, availability, latency, load balancing, caching, queues, replication, CAP, idempotency, rate limiting, retries, circuit breakers | Turn requirements into a design and defend the trade-offs |
+| 6 | **Docker** | Images, containers, Dockerfiles, layers, volumes, networks, Compose, multi-stage builds, container security | Package an application reproducibly |
+| 7 | **CI/CD** | Pipelines, tests, artifacts, environments, deployment strategies, secrets, rollback, pipeline security, Jenkins | Understand the full path from commit to running app (building on existing Jenkins experience) |
+| 8 | **Cloud** | Compute, networking, VMs, storage, managed databases, IAM, firewalls, DNS, load balancers, autoscaling, monitoring, cost (AWS / Azure) | Learn transferable concepts, not provider buttons |
+| 9 | **Kubernetes** | Pods, Deployments, Services, ConfigMaps, Secrets, namespaces, ingress, probes, limits, scaling, rolling updates, storage, networking | Know why it exists and operate a basic app on it (not just YAML) |
+| 10 | **Security** | AuthN/AuthZ, sessions, JWT, password hashing, secrets, TLS, input validation, SQLi, XSS, CSRF, SSRF, dependencies, least privilege, OWASP Top 10, threat modeling | Understand how applications and infrastructure fail. *Integrated throughout, not a final chapter.* |
+| 11 | **Observability** | Logs, metrics, traces, health checks, alerting, dashboards, correlation IDs, incident investigation, performance analysis | Investigate production problems with evidence, not guesses |
+| 12 | **AI Engineering** | LLM fundamentals, prompting, structured output, tool calling, embeddings, vector DBs, RAG, agents, evaluation, hallucinations, prompt injection, cost/latency | Understand how engineering changes when AI is part of the workflow |
 
-The system should move through stages such as:
+---
+
+## 4. Main Project
+
+One evolving, production-style application (possible domain: e-commerce). It should eventually demonstrate authentication, users, business entities, CRUD, relational data, transactions, APIs, async processing, caching, background jobs, messaging, observability, CI/CD, Docker, cloud deployment, security, scalability, and an AI-powered feature.
+
+### Evolution stages
+
+**Stage 1 — Basic application** · *Focus: backend fundamentals, HTTP, APIs, SQL, testing*
 
 ```text
-Simple application
-      ↓
-Modular application
-      ↓
-Production-style application
-      ↓
-Dockerized application
-      ↓
-CI/CD
-      ↓
-Cloud deployment
-      ↓
-Observability
-      ↓
-Security hardening
-      ↓
-Distributed components
-      ↓
-Messaging
-      ↓
-AI-powered functionality
+Client → Backend → Database
 ```
 
-This allows architectural decisions and trade-offs to become practical rather than theoretical.
-
----
-
-# 🗺️ Global Roadmap
-
-## Phase 1 — Foundations
-
-### Linux
-
-Learn how software actually runs on a machine.
-
-Topics:
-
-* Linux filesystem
-* terminal
-* Bash
-* processes
-* services
-* permissions
-* users and groups
-* environment variables
-* logs
-* networking commands
-* troubleshooting
-* shell scripting
-
-Goal:
-
-> Be comfortable operating and debugging a Linux machine from the command line.
-
----
-
-### Git
-
-Learn Git as an engineering tool rather than just a way to upload code.
-
-Topics:
-
-* working tree
-* staging area
-* commits
-* branches
-* merges
-* merge conflicts
-* rebasing
-* remotes
-* fetch/pull/push
-* revert
-* reset
-* collaboration workflows
-* pull requests
-
-Goal:
-
-> Be able to work safely in a team Git repository.
-
----
-
-### Networking
-
-Understand how applications communicate.
-
-Topics:
-
-* OSI/TCP-IP concepts
-* IP addresses
-* ports
-* TCP/UDP
-* DNS
-* HTTP/HTTPS
-* TLS
-* proxies
-* reverse proxies
-* load balancers
-* NAT
-* firewalls
-* localhost
-* sockets
-* HTTP debugging
-
-Goal:
-
-> When an application cannot communicate with another system, understand where and why the communication fails.
-
----
-
-# Phase 2 — Backend Engineering
-
-## Backend Development
-
-Build serious backend applications.
-
-Topics:
-
-* HTTP
-* REST APIs
-* API design
-* request/response lifecycle
-* authentication
-* authorization
-* validation
-* error handling
-* configuration
-* dependency injection
-* middleware
-* background jobs
-* caching
-* asynchronous processing
-* API documentation
-* testing
-
-The backend technology will depend on the stack used during the project, but the focus remains on transferable engineering concepts.
-
-Goal:
-
-> Build backend services that are understandable, testable, maintainable, and deployable.
-
----
-
-# Phase 3 — Databases
-
-## Relational Databases
-
-Topics:
-
-* SQL
-* tables
-* relationships
-* primary keys
-* foreign keys
-* indexes
-* constraints
-* transactions
-* ACID
-* isolation levels
-* normalization
-* query optimization
-* execution plans
-* migrations
-
-Possible technology:
-
-* PostgreSQL
-
----
-
-## NoSQL and Distributed Data
-
-Topics:
-
-* document databases
-* key-value stores
-* caching
-* Redis
-* consistency
-* replication
-* partitioning
-* trade-offs between SQL and NoSQL
-
-Goal:
-
-> Choose a data-storage strategy based on requirements rather than technology trends.
-
----
-
-# Phase 4 — Software Architecture
-
-## Software Architecture
-
-Learn how to structure systems that need to evolve.
-
-Topics:
-
-* modularity
-* coupling
-* cohesion
-* separation of concerns
-* SOLID
-* dependency inversion
-* layered architecture
-* hexagonal architecture
-* clean architecture
-* modular monoliths
-* microservices
-* event-driven architecture
-* domain-driven design fundamentals
-* architectural trade-offs
-
-Important principle:
-
-> Microservices are not automatically better architecture.
-
-The project should first demonstrate that a modular monolith can be designed properly before introducing distributed services.
-
----
-
-# Phase 5 — System Design
-
-Learn how to reason about systems at a larger scale.
-
-Topics:
-
-* scalability
-* availability
-* reliability
-* latency
-* throughput
-* load balancing
-* caching
-* queues
-* asynchronous processing
-* replication
-* partitioning
-* consistency
-* fault tolerance
-* distributed systems
-* CAP-related trade-offs
-* idempotency
-* rate limiting
-* retries
-* circuit breakers
-
-Goal:
-
-> Be able to take requirements and design a system while explaining its trade-offs.
-
----
-
-# Phase 6 — Docker
-
-Learn containerization from first principles.
-
-Topics:
-
-* images
-* containers
-* Dockerfiles
-* layers
-* volumes
-* networks
-* environment variables
-* Docker Compose
-* multi-stage builds
-* container security
-* image optimization
-* container debugging
-
-Goal:
-
-> Understand what an application needs to run and package it reproducibly.
-
----
-
-# Phase 7 — CI/CD
-
-Learn how software moves from source code to deployment.
-
-Topics:
-
-* CI/CD concepts
-* automated tests
-* build pipelines
-* artifacts
-* environment management
-* deployment strategies
-* secrets
-* rollback
-* pipeline security
-* Jenkins
-* Git-based workflows
-
-The existing practical experience with Jenkins will be used as a starting point and then connected to the underlying concepts.
-
-Goal:
-
-> Understand the complete path from Git commit to running application.
-
----
-
-# Phase 8 — Cloud
-
-Learn cloud infrastructure instead of simply learning cloud-specific buttons.
-
-Topics:
-
-* compute
-* networking
-* virtual machines
-* storage
-* databases
-* identity and access management
-* security groups/firewalls
-* DNS
-* load balancers
-* autoscaling
-* monitoring
-* infrastructure concepts
-* cost awareness
-
-Possible cloud platforms:
-
-* AWS
-* Azure
-
-The priority is understanding concepts that transfer between cloud providers.
-
----
-
-# Phase 9 — Kubernetes
-
-Learn container orchestration.
-
-Topics:
-
-* Pods
-* Deployments
-* Services
-* ConfigMaps
-* Secrets
-* namespaces
-* ingress
-* health checks
-* resource limits
-* scaling
-* rolling deployments
-* persistent storage
-* troubleshooting
-* Kubernetes networking
-
-Goal:
-
-> Understand why Kubernetes exists, what problems it solves, and how to operate a basic application on it.
-
-Kubernetes should not be learned as a collection of YAML files.
-
----
-
-# Phase 10 — Security
-
-Security will be integrated throughout the project rather than treated as a final chapter.
-
-Topics:
-
-* authentication
-* authorization
-* sessions
-* JWT
-* password hashing
-* secrets management
-* TLS
-* input validation
-* SQL injection
-* XSS
-* CSRF
-* SSRF
-* dependency vulnerabilities
-* container security
-* least privilege
-* OWASP Top 10
-* basic threat modeling
-
-Goal:
-
-> Understand the major ways applications and infrastructure fail from a security perspective.
-
----
-
-# Phase 11 — Observability & Production Engineering
-
-Learn how engineers understand systems after deployment.
-
-Topics:
-
-* logs
-* metrics
-* traces
-* health checks
-* readiness/liveness
-* alerting
-* dashboards
-* correlation IDs
-* structured logging
-* incident investigation
-* performance analysis
-* resource monitoring
-
-Goal:
-
-> Be able to investigate a production problem using evidence rather than guessing.
-
----
-
-# Phase 12 — AI Engineering
-
-AI will not simply be treated as a coding assistant.
-
-The goal is to understand how modern software engineering changes when AI agents become part of the development workflow.
-
-Topics:
-
-* LLM fundamentals
-* APIs
-* prompting
-* structured output
-* tool calling
-* embeddings
-* vector databases
-* RAG
-* agents
-* evaluation
-* hallucinations
-* context management
-* AI security
-* prompt injection
-* cost/latency considerations
-* AI observability
-
----
-
-# 🤖 AI-Assisted Development
-
-AI coding tools will be used throughout the project.
-
-Examples:
-
-* Claude Code
-* ChatGPT
-* other coding agents when useful
-
-However, AI will follow a specific rule:
-
-> **AI accelerates implementation; it does not replace understanding.**
-
-The workflow should generally be:
+**Stage 2 — Modular monolith** · *Focus: modularity, boundaries, dependency management*
 
 ```text
-Understand the problem
-        ↓
-Design a solution
-        ↓
-Attempt it yourself
-        ↓
-Use documentation
-        ↓
-Use AI for assistance
-        ↓
-Review generated code
-        ↓
-Run tests
-        ↓
-Investigate failures
-        ↓
-Understand the final implementation
+              Backend
+                 │
+     ┌───────────┼───────────┐
+   Users      Orders     Products
+     └───────────┼───────────┘
+                 ↓
+             Database
 ```
 
-For difficult problems:
+**Stage 3 — Dockerized** · *Focus: containers, networking, configuration, persistence*
 
 ```text
-Don't immediately ask:
+Docker Compose:  Backend ──┬── Database
+                           └── Redis
+```
 
-"Build this for me."
+**Stage 4 — CI/CD** · *Focus: automation, quality gates, deployment*
 
-Prefer:
+```text
+Git → CI → Tests → Build → Container image → Deployment
+```
 
-"Here is what I understand.
-Here is what I tried.
-Here is the error.
-Help me reason about the problem."
+**Stage 5 — Cloud** · *Focus: cloud networking, infrastructure, security, reliability*
+
+```text
+Internet → Load balancer → Application → Database + Cache
+```
+
+**Stage 6 — Distributed components** *(only with a concrete reason)* · *Focus: messaging, eventual consistency, failure handling*
+
+```text
+API ──┬── Orders ──→ Message queue ──→ Notification service
+      └── Products
+```
+
+**Stage 7 — AI feature** · *Focus: integration, evaluation, security, cost, reliability*
+
+```text
+User → Application → AI service (LLM + Retrieval + Business context)
 ```
 
 ---
 
-# 🧠 Anti-AI-Dependency Rules
-
-AI is allowed to:
-
-* explain concepts
-* provide hints
-* generate boilerplate
-* suggest implementations
-* review code
-* generate tests
-* identify potential bugs
-* explain errors
-* propose alternatives
-* help investigate documentation
-
-AI should not become a substitute for:
-
-* understanding
-* debugging
-* architecture decisions
-* reading documentation
-* reviewing code
-* learning fundamentals
-
-For important components, I should be able to explain:
-
-1. What the code does.
-2. Why it exists.
-3. Why this approach was chosen.
-4. What alternatives exist.
-5. What can go wrong.
-6. How it is tested.
-7. How it behaves in production.
-
----
-
-# 🏗️ Main Project
-
-The repository will contain one evolving production-style application.
-
-The exact domain can evolve, but the application should provide enough complexity to demonstrate:
-
-* authentication
-* users
-* business entities
-* CRUD operations
-* relational data
-* transactions
-* APIs
-* asynchronous processing
-* caching
-* background jobs
-* messaging
-* observability
-* CI/CD
-* Docker
-* cloud deployment
-* security
-* scalability
-* an AI-powered feature
-
-A possible domain is an e-commerce platform.
-
----
-
-# 🔄 Application Evolution
-
-The architecture should evolve intentionally.
-
-## Stage 1 — Basic Application
-
-```text
-Client
-  ↓
-Backend
-  ↓
-Database
-```
-
-Focus:
-
-* backend fundamentals
-* HTTP
-* APIs
-* SQL
-* testing
-
----
-
-## Stage 2 — Modular Monolith
-
-```text
-                Backend
-                   │
-       ┌───────────┼───────────┐
-       ↓           ↓           ↓
-    Users       Orders      Products
-       │           │           │
-       └───────────┼───────────┘
-                   ↓
-                Database
-```
-
-Focus:
-
-* modularity
-* boundaries
-* dependency management
-* architecture
-
----
-
-## Stage 3 — Dockerized Application
-
-```text
-Docker Compose
-
-┌──────────────┐
-│   Backend    │
-└──────┬───────┘
-       │
- ┌─────┴─────┐
- ↓           ↓
-Database    Redis
-```
-
-Focus:
-
-* containers
-* networking
-* configuration
-* persistence
-
----
-
-## Stage 4 — CI/CD
-
-```text
-Git
- ↓
-CI Pipeline
- ↓
-Tests
- ↓
-Build
- ↓
-Container Image
- ↓
-Deployment
-```
-
-Focus:
-
-* automation
-* quality gates
-* deployment
-
----
-
-## Stage 5 — Cloud
-
-```text
-Internet
-   ↓
-Load Balancer
-   ↓
-Application
-   ↓
-Database
-   ↓
-Cache
-```
-
-Focus:
-
-* networking
-* cloud infrastructure
-* security
-* reliability
-
----
-
-## Stage 6 — Distributed Components
-
-Only when there is a concrete reason:
-
-```text
-             API
-              │
-      ┌───────┴───────┐
-      ↓               ↓
-   Orders          Products
-      │
-      ↓
-   Message Queue
-      │
-      ↓
- Notification Service
-```
-
-Focus:
-
-* asynchronous communication
-* messaging
-* eventual consistency
-* failure handling
-
----
-
-## Stage 7 — AI Feature
-
-Example:
-
-```text
-User
- ↓
-Application
- ↓
-AI Service
- ├── LLM
- ├── Retrieval
- └── Business Context
-```
-
-Focus:
-
-* AI integration
-* evaluation
-* security
-* cost
-* reliability
-
----
-
-# 📁 Repository Structure
+## 5. Repository Structure
 
 ```text
 software-engineering-2026/
-│
 ├── README.md
-│
-├── linux/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── git/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   └── labs/
-│
-├── networking/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── backend/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── databases/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── architecture/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── case-studies/
-│
-├── system-design/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── case-studies/
-│
-├── docker/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── cloud/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── kubernetes/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── mini-project/
-│
-├── security/
-│   ├── README.md
-│   ├── notes/
-│   ├── exercises/
-│   ├── labs/
-│   └── case-studies/
-│
-└── ai/
-    ├── README.md
-    ├── notes/
-    ├── exercises/
-    ├── labs/
-    └── mini-project/
+├── linux/            ├── notes/ exercises/ labs/ mini-project/
+├── git/              ├── notes/ exercises/ labs/
+├── networking/       ├── notes/ exercises/ labs/ mini-project/
+├── backend/          ├── notes/ exercises/ labs/ mini-project/
+├── databases/        ├── notes/ exercises/ labs/ mini-project/
+├── architecture/     ├── notes/ exercises/ labs/ case-studies/ decisions/
+├── system-design/    ├── notes/ exercises/ labs/ case-studies/
+├── docker/           ├── notes/ exercises/ labs/ mini-project/
+├── cloud/            ├── notes/ exercises/ labs/ mini-project/
+├── kubernetes/       ├── notes/ exercises/ labs/ mini-project/
+├── security/         ├── notes/ exercises/ labs/ case-studies/
+└── ai/               ├── notes/ exercises/ labs/ mini-project/
 ```
 
-The structure may evolve as the project becomes more advanced.
+Every topic folder has its own `README.md` covering: what I'm learning, why it matters, objectives, weekly progression, exercises, labs, resources, and completion criteria. The structure may evolve as the project advances.
 
 ---
 
-# 📚 Documentation Strategy
+## 6. Working Method
 
-Each topic should have its own README.
+### Content types
 
-For example:
+| Type | Purpose | Key question |
+|---|---|---|
+| **Notes** | Concepts in my own words | Do I understand it? |
+| **Exercises** | Small focused tasks (write a Bash script, inspect a port, resolve a Git conflict, write a query, create a Dockerfile) | Can I actually do this? |
+| **Labs** | Investigation-oriented: configure, fail, debug, document | Can I find and fix a root cause? |
+| **Mini-projects** | Combine several concepts | Can I build something practical? |
+
+**Notes example**
+
+- Bad: *"A process is an instance of a program that is being executed."*
+- Better: *"When I start a program, Linux creates a process with a PID, memory, permissions, and other resources."*
+
+**Lab shape**
 
 ```text
-linux/
-└── README.md
+App is running → but unreachable → investigate → root cause → fix → document
 ```
 
-should explain:
+**Mini-project ideas**
 
-* what I am learning
-* why it matters
-* learning objectives
-* weekly progression
-* exercises
-* labs
-* resources
-* completion criteria
+| Topic | Mini-project |
+|---|---|
+| Linux | Server health monitor |
+| Networking | HTTP diagnostic tool |
+| Backend | Production-style REST API |
+| Databases | Transaction and query optimization lab |
+| Docker | Multi-container application |
+| Kubernetes | Backend + database/cache deployment |
+| AI | RAG-based application feature |
 
----
-
-## Notes
-
-Notes should explain concepts in my own words.
-
-Bad:
-
-> "A process is an instance of a program that is being executed."
-
-Better:
-
-> "When I start a program, Linux creates a process that represents the running instance. The process has a PID, memory, permissions and other resources."
-
-The purpose is understanding, not copying definitions.
-
----
-
-# 🧪 Exercises
-
-Exercises are small focused tasks.
-
-Examples:
+### How to start a new topic
 
 ```text
-Create a Bash script.
-Find a process.
-Inspect an open port.
-Resolve a Git conflict.
-Write a SQL query.
-Create a Dockerfile.
-Configure a CI pipeline.
+1. Read the topic README
+2. Understand the objectives
+3. Study the fundamentals
+4. Do the exercises
+5. Do the labs
+6. Build the mini-project
+7. Document what I learned
+8. Review without AI
+9. Integrate into the main project
 ```
 
-Exercises should answer:
-
-> "Can I actually do this?"
-
----
-
-# 🔬 Labs
-
-Labs are investigation-oriented.
-
-A lab should intentionally involve:
-
-* configuration
-* failure
-* debugging
-* investigation
-* documentation
-
-For example:
+### Debugging methodology
 
 ```text
-Application is running
-        ↓
-But cannot be reached
-        ↓
-Investigate
-        ↓
-Find the root cause
-        ↓
-Fix it
-        ↓
-Document the investigation
+ 1. Reproduce the problem
+ 2. Define expected behavior
+ 3. Observe actual behavior
+ 4. Collect evidence
+ 5. Form a hypothesis
+ 6. Test the hypothesis
+ 7. Identify the root cause
+ 8. Apply the smallest appropriate fix
+ 9. Test again
+10. Document the lesson
 ```
 
-This is important because real engineering work often looks more like debugging than writing new code.
+Avoid: `Error → Ask AI → Copy fix → Hope`. AI can join the investigation, but the reasoning must stay mine.
+
+### Architecture Decision Records (ADRs)
+
+Document important decisions in `architecture/decisions/`:
+
+```text
+ADR-001-modular-monolith.md
+ADR-002-postgresql.md
+ADR-003-redis.md
+ADR-004-message-queue.md
+```
+
+Each ADR answers: **Context · Decision · Alternatives · Consequences** (e.g. *why PostgreSQL instead of MongoDB?*).
+
+### Security hygiene
+
+Never commit passwords, API keys, private keys, tokens, production credentials, or connection strings containing secrets. Use `.env` files, environment variables, secret managers, and local configuration, and keep sensitive files in `.gitignore`.
 
 ---
 
-# 🚀 Mini-Projects
+## 7. AI Usage Rules
 
-Mini-projects combine several concepts.
+> **AI accelerates implementation; it does not replace understanding.**
 
-Examples:
+**Tools:** Claude Code, ChatGPT, and other coding agents when useful.
 
-### Linux
+**Workflow**
 
-Server Health Monitor
+```text
+Understand the problem → Design a solution → Attempt it myself → Read docs
+→ Use AI for assistance → Review generated code → Run tests
+→ Investigate failures → Understand the final implementation
+```
 
-### Networking
+**Prompt style for hard problems**
 
-HTTP diagnostic tool
+- Avoid: *"Build this for me."*
+- Prefer: *"Here is what I understand. Here is what I tried. Here is the error. Help me reason about the problem."*
 
-### Backend
+| AI may | AI must not replace |
+|---|---|
+| Explain concepts and errors | Understanding |
+| Give hints and alternatives | Debugging |
+| Generate boilerplate and tests | Architecture decisions |
+| Suggest implementations | Reading documentation |
+| Review code and spot bugs | Reviewing code |
+| Help search documentation | Learning fundamentals |
 
-Production-style REST API
-
-### Databases
-
-Transaction and query optimization lab
-
-### Docker
-
-Multi-container application
-
-### Kubernetes
-
-Deploy backend + database/cache
-
-### AI
-
-RAG-based application feature
+**For every important component I must be able to explain:** what it does, why it exists, why this approach, what the alternatives are, what can go wrong, how it is tested, and how it behaves in production.
 
 ---
 
-# 📊 Progress Tracking
+## 8. Weekly Rhythm and Review
 
-Each topic should have a checklist.
+**Time budget:** about 10–12 hours per week, outside university and internship. Consistency matters more than the exact days.
 
-Example:
+| Day | Activity |
+|---|---|
+| Mon | Theory / concepts |
+| Tue | Practical exercises |
+| Wed | Fundamentals |
+| Thu | AI-assisted implementation |
+| Fri | Rest / university / internship |
+| Sat | Deep project work |
+| Sun | Review + documentation |
+
+**Weekly review questions**
+
+1. What did I learn?
+2. What did I build?
+3. What did I break?
+4. What did I misunderstand? *(the most important one)*
+5. What can I now explain without looking at documentation?
+6. What should I revisit?
+
+**Progress tracking:** each topic has a checklist. Tick a box only when I can do or explain the task without relying entirely on a tutorial.
 
 ```markdown
 ## Linux
-
 - [ ] Navigate filesystem
-- [ ] Understand absolute/relative paths
-- [ ] Use pipes
-- [ ] Redirect output
-- [ ] Understand processes
+- [ ] Absolute vs relative paths
+- [ ] Pipes and redirection
+- [ ] Processes
 - [ ] Inspect ports
-- [ ] Understand permissions
+- [ ] Permissions
 - [ ] Manage services
 - [ ] Read logs
 - [ ] Write Bash scripts
 - [ ] Debug a service
 ```
 
-A checkbox should only be marked when I can perform or explain the task without relying entirely on a tutorial.
-
 ---
 
-# 🧩 Engineering Decision Records
+## 9. Definition of Done
 
-Important architectural decisions should be documented.
+A topic is done not when the tutorials are watched, but when I can:
 
-Example:
+- Explain the fundamental concepts
+- Perform common tasks without a tutorial
+- Debug a basic failure
+- Build something practical
+- Read the relevant documentation
+- Explain common trade-offs
+- Recognize when I need more knowledge
+- Use AI without blindly trusting it
+
+**Final target:** a strong enough foundation to learn new technologies quickly and make sound engineering decisions, with a portfolio that shows *how I think as an engineer*.
 
 ```text
-architecture/
-└── decisions/
-    ├── ADR-001-modular-monolith.md
-    ├── ADR-002-postgresql.md
-    ├── ADR-003-redis.md
-    └── ADR-004-message-queue.md
-```
-
-Each ADR should answer:
-
-```text
-Context
-Decision
-Alternatives
-Consequences
-```
-
-Example:
-
-> Why PostgreSQL instead of MongoDB?
-
-The purpose is to demonstrate engineering reasoning rather than simply naming technologies.
-
----
-
-# 🐛 Debugging Methodology
-
-When something breaks, use a structured process.
-
-```text
-1. Reproduce the problem
-        ↓
-2. Define the expected behavior
-        ↓
-3. Observe the actual behavior
-        ↓
-4. Collect evidence
-        ↓
-5. Form a hypothesis
-        ↓
-6. Test the hypothesis
-        ↓
-7. Identify the root cause
-        ↓
-8. Apply the smallest appropriate fix
-        ↓
-9. Test again
-        ↓
-10. Document the lesson
-```
-
-Avoid:
-
-```text
-Error
- ↓
-Ask AI
- ↓
-Copy fix
- ↓
-Hope
-```
-
-AI can participate in the investigation, but the reasoning process should remain understandable.
-
----
-
-# 🔐 Security Principles
-
-Security should be considered from the beginning.
-
-Never commit:
-
-```text
-passwords
-API keys
-private keys
-tokens
-production credentials
-connection strings containing secrets
-```
-
-Use:
-
-```text
-.env
-secret managers
-environment variables
-local configuration
-```
-
-and ensure sensitive files are included in `.gitignore` where appropriate.
-
----
-
-# 📝 Weekly Review
-
-At the end of each week, answer:
-
-### What did I learn?
-
-List the important concepts.
-
-### What did I build?
-
-List practical work.
-
-### What did I break?
-
-List failures.
-
-### What did I misunderstand?
-
-This is particularly important.
-
-### What can I now explain?
-
-Write explanations without looking at documentation.
-
-### What should I revisit?
-
-Identify weak areas.
-
----
-
-# 📅 Initial Learning Schedule
-
-The project is designed around approximately:
-
-**10–12 hours per week**
-
-outside university and internship obligations.
-
-A possible weekly structure:
-
-| Day       | Activity                       |
-| --------- | ------------------------------ |
-| Monday    | Theory / concepts              |
-| Tuesday   | Practical exercises            |
-| Wednesday | Fundamentals                   |
-| Thursday  | AI-assisted implementation     |
-| Friday    | Rest / university / internship |
-| Saturday  | Deep project work              |
-| Sunday    | Review + documentation         |
-
-The schedule is flexible.
-
-Consistency is more important than following the exact days.
-
----
-
-# 🏆 Definition of Done
-
-A topic is not complete simply because all tutorials were watched.
-
-A topic is considered sufficiently learned when I can:
-
-* Explain the fundamental concepts.
-* Perform common tasks without a tutorial.
-* Debug a basic failure.
-* Build something practical.
-* Read relevant documentation.
-* Explain common trade-offs.
-* Recognize when I need more knowledge.
-* Use AI without blindly trusting it.
-
----
-
-# 📈 Final Competency Target
-
-At the end of this project, the target profile is:
-
-```text
-                    SOFTWARE ENGINEER
-                           │
-          ┌────────────────┼────────────────┐
-          ↓                ↓                ↓
-      Fundamentals     Application      Architecture
-          │             Engineering          │
-     ┌────┼────┐            │            ┌────┼────┐
-     ↓    ↓    ↓            ↓            ↓    ↓    ↓
-   Linux Git Network     Backend       Design System
-                         Database      Architecture
-                              │
-                              ↓
-                        DevOps / Cloud
-                              │
-                    ┌─────────┼─────────┐
-                    ↓         ↓         ↓
-                  Docker    CI/CD   Kubernetes
-                              │
-                              ↓
-                        Production
-                              │
-                    ┌─────────┼─────────┐
-                    ↓         ↓         ↓
-                 Security Observability Reliability
-                              │
-                              ↓
-                         AI Engineering
-```
-
-The goal is not to become an expert in every technology.
-
-The goal is to develop a strong enough foundation to learn new technologies quickly and make sound engineering decisions.
-
----
-
-# 🎓 Expected Final Portfolio
-
-The repository should eventually demonstrate:
-
-* Linux fundamentals
-* Git proficiency
-* Networking knowledge
-* Backend development
-* Database design
-* Software architecture
-* System design
-* Docker
-* CI/CD
-* Cloud
-* Kubernetes
-* Security
-* Observability
-* AI-assisted development
-* AI engineering
-
-Most importantly, it should demonstrate **how I think as an engineer**.
-
----
-
-# 📚 Core Resources
-
-The initial resource list includes:
-
-* *Fundamentals of Software Architecture* — Mark Richards & Neal Ford
-* *Designing Data-Intensive Applications* — Martin Kleppmann
-* *Computer Networking: A Top-Down Approach* — Kurose & Ross
-* *Clean Architecture* — Robert C. Martin
-* *Docker Deep Dive* — Nigel Poulton
-* *Kubernetes in Action* — Marko Lukša
-* *System Design Interview* — Alex Xu
-* *Pro Git* — Scott Chacon & Ben Straub
-* OWASP documentation
-* Official Docker documentation
-* Official Kubernetes documentation
-* AWS / Azure learning resources
-* Linux documentation and manual pages
-* Missing Semester of Your CS Education
-* roadmap.sh
-
-Official documentation should generally be preferred over random tutorials when resolving technical questions.
-
----
-
-# 🧭 How to Use This Repository
-
-When starting a new topic:
-
-```text
-1. Read the topic README
-        ↓
-2. Understand the learning objectives
-        ↓
-3. Study the fundamentals
-        ↓
-4. Complete exercises
-        ↓
-5. Perform labs
-        ↓
-6. Build the mini-project
-        ↓
-7. Document what was learned
-        ↓
-8. Review without AI
-        ↓
-9. Integrate the knowledge into the main project
+SOFTWARE ENGINEER
+├── Fundamentals ........ Linux · Git · Networking
+├── Application ......... Backend · Databases
+├── Architecture ........ Design · System design
+├── DevOps / Cloud ...... Docker · CI/CD · Kubernetes
+├── Production .......... Security · Observability · Reliability
+└── AI Engineering
 ```
 
 ---
 
-# 🚦 Current Status
+## 10. Resources
 
-## Phase 1 — Foundations
+**Books**
 
-### Month 1 — Linux + Git
+- *Fundamentals of Software Architecture*: Mark Richards & Neal Ford
+- *Designing Data-Intensive Applications*: Martin Kleppmann
+- *Computer Networking: A Top-Down Approach*: Kurose & Ross
+- *Clean Architecture*: Robert C. Martin
+- *Docker Deep Dive*: Nigel Poulton
+- *Kubernetes in Action*: Marko Lukša
+- *System Design Interview*: Alex Xu
+- *Pro Git*: Scott Chacon & Ben Straub
 
-**Status:** 🟡 In Progress
+**Documentation and courses**
 
-Focus:
+- OWASP documentation
+- Official Docker and Kubernetes documentation
+- AWS / Azure learning resources
+- Linux manual pages
+- The Missing Semester of Your CS Education
+- roadmap.sh
 
-* Linux fundamentals
-* Bash
-* Processes
-* Services
-* Permissions
-* Logs
-* Networking basics
-* Git
-* Debugging mindset
-
-### Month 2 — Networking + Backend Foundations
-
-**Status:** ⚪ Not Started
-
----
-
-## Phase 2 — Application Engineering
-
-### Months 3–4 — Backend + Databases
-
-**Status:** ⚪ Not Started
+Official documentation is preferred over random tutorials.
 
 ---
 
-## Phase 3 — Architecture
+## 11. Current Status
 
-### Months 5–6 — Architecture + System Design
-
-**Status:** ⚪ Not Started
-
----
-
-## Phase 4 — Infrastructure
-
-### Months 7–8 — Docker + CI/CD + Cloud
-
-**Status:** ⚪ Not Started
+| Phase | Period | Focus | Status |
+|---|---|---|---|
+| Foundations | Month 1 | Linux + Git | 🟡 In progress |
+| Foundations | Month 2 | Networking + backend foundations | ⚪ Not started |
+| Application engineering | Months 3–4 | Backend + databases | ⚪ Not started |
+| Architecture | Months 5–6 | Architecture + system design | ⚪ Not started |
+| Infrastructure | Months 7–8 | Docker + CI/CD + cloud | ⚪ Not started |
+| Production engineering | Months 9–10 | Kubernetes + security + observability | ⚪ Not started |
+| AI + portfolio | Months 11–12 | AI engineering + final portfolio | ⚪ Not started |
 
 ---
 
-## Phase 5 — Production Engineering
+## Guiding Questions
 
-### Months 9–10 — Kubernetes + Security + Observability
-
-**Status:** ⚪ Not Started
-
----
-
-## Phase 6 — AI Engineering + Portfolio
-
-### Months 11–12
-
-**Status:** ⚪ Not Started
-
----
-
-# 💡 Final Principle
-
-This project is not about collecting technologies.
-
-It is about becoming the person who can look at a system and ask:
+When looking at any system, I should be able to ask:
 
 ```text
-What is happening?
-
-Why is it happening?
-
-What are the constraints?
-
-What are the trade-offs?
-
-What can fail?
-
-How can I verify my assumptions?
-
-How should I design it?
-
-How should I deploy it?
-
-How will I monitor it?
-
-How will I debug it?
-
-How will I secure it?
-
-And when AI writes part of it:
-
-Do I actually understand what it produced?
+What is happening, and why?
+What are the constraints and trade-offs?
+What can fail, and how do I verify my assumptions?
+How should I design, deploy, monitor, debug, and secure it?
+And when AI writes part of it: do I actually understand what it produced?
 ```
-
-That is the standard this repository is designed to build toward.
-
----
 
 **Start small. Understand deeply. Build continuously. Break things. Debug them. Document the lessons.**
-

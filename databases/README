@@ -1,0 +1,125 @@
+# Databases
+
+## What I am learning
+
+How data is modeled, stored, queried, and kept correct: relational databases and SQL first (PostgreSQL), then NoSQL, caching with Redis, and the trade-offs of distributed data.
+
+## Why it matters
+
+Most backend bugs, performance problems, and data-loss incidents trace back to the database: a missing index, a wrong transaction boundary, a bad schema. Understanding the database before relying on an ORM means I can tell when the ORM is generating something harmful.
+
+> **Goal:** choose a data-storage strategy based on requirements rather than technology trends.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Design a relational schema with tables, keys, relationships, and constraints
+- Write SQL for filtering, joins, aggregation, subqueries, and window functions
+- Normalize a schema and explain when to denormalize
+- Explain transactions, ACID, and isolation levels, and the anomalies each one prevents
+- Create indexes and explain when they help and when they hurt
+- Read an execution plan and optimize a slow query
+- Manage schema changes safely with migrations
+- Explain document stores, key-value stores, and when each fits
+- Use Redis for caching and explain invalidation
+- Explain replication, partitioning, and consistency trade-offs
+- Justify SQL versus NoSQL for a given set of requirements
+
+---
+
+## Weekly progression
+
+| Week | Focus | Key concepts |
+|---|---|---|
+| 1 | SQL fundamentals | `SELECT`, filtering, sorting, aggregation, `JOIN` |
+| 2 | Schema design | Tables, primary and foreign keys, constraints, normalization |
+| 3 | Transactions | ACID, isolation levels, locking, anomalies |
+| 4 | Performance | Indexes, `EXPLAIN`, query optimization |
+| 5 | Migrations and application access | Migration tools, using the database from the backend, ORM versus raw SQL |
+| 6 | NoSQL and Redis | Document and key-value stores, caching patterns, expiry |
+| 7 | Distributed data | Replication, partitioning, consistency, CAP-related trade-offs |
+| 8 | Mini-project and review | Transaction and query optimization lab |
+
+This topic runs in parallel with Backend from week 3 of that topic. The Stage 1 database of the main project is designed here.
+
+---
+
+## Checklist
+
+- [ ] Write queries with joins, grouping, and subqueries
+- [ ] Use window functions and common table expressions
+- [ ] Design tables with primary keys, foreign keys, and constraints
+- [ ] Normalize a schema to third normal form
+- [ ] Explain when denormalization is justified
+- [ ] Explain ACID
+- [ ] Explain each isolation level and the anomalies it allows
+- [ ] Reproduce a dirty read, a non-repeatable read, and a lost update
+- [ ] Create indexes and explain how they work (B-tree)
+- [ ] Read `EXPLAIN` and `EXPLAIN ANALYZE` output
+- [ ] Optimize a slow query using evidence
+- [ ] Write and apply migrations, including a safe rollback
+- [ ] Explain ORM benefits and risks (such as N+1 queries)
+- [ ] Explain document and key-value stores
+- [ ] Use Redis for caching with expiry and invalidation
+- [ ] Explain replication and replication lag
+- [ ] Explain partitioning (sharding) and its costs
+- [ ] Justify SQL versus NoSQL for a given use case
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Exercises
+
+- [ ] Design a schema for users, products, and orders, then write ten queries against it
+- [ ] Add constraints that make invalid data impossible to insert
+- [ ] Normalize a deliberately messy table and explain each step
+- [ ] Write a transfer between two accounts inside a transaction, then force a failure midway
+- [ ] Run two sessions at once to reproduce each isolation anomaly
+- [ ] Add an index and compare the query plan before and after
+- [ ] Write a migration that adds a column to a populated table without downtime
+- [ ] Cache one expensive query in Redis with a time-to-live
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Slow query:** find why it is slow with `EXPLAIN ANALYZE` and fix it, then check that the fix did not hurt writes
+- [ ] **Overselling:** two concurrent orders buy the last item, reproduce it and fix it with locking or a constraint
+- [ ] **Deadlock:** cause one deliberately, read the log, and resolve it
+- [ ] **N+1 queries:** find one in the backend using query logging and remove it
+- [ ] **Broken migration:** a migration fails halfway on populated data, recover safely
+- [ ] **Stale cache:** users see old data after an update, fix the invalidation
+
+## Mini-project: Transaction and Query Optimization Lab
+
+A documented lab on the main project's data (users, products, orders) that includes:
+
+- A schema with constraints and a migration history
+- A realistic dataset large enough that missing indexes matter
+- At least three slow queries, each with an execution plan before and after
+- A concurrency scenario (such as stock decrement) shown broken, then fixed
+- A Redis cache for one read path, with an invalidation strategy
+- An ADR comparing PostgreSQL with a NoSQL alternative for this domain
+- A README with the findings and measurements
+
+---
+
+## Resources
+
+- PostgreSQL official documentation (especially concurrency control and `EXPLAIN`)
+- *Designing Data-Intensive Applications*: Martin Kleppmann (storage, transactions, replication, partitioning)
+- Redis official documentation
+- Use The Index, Luke (indexing and query performance)
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can design a schema and optimize a slow query without a tutorial
+- [ ] I can reproduce and fix a concurrency problem
+- [ ] The mini-project is delivered with measurements and an ADR
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

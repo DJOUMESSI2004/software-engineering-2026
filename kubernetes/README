@@ -1,0 +1,151 @@
+# Kubernetes
+
+## What I am learning
+
+Container orchestration: how Kubernetes runs, connects, scales, and heals containerized applications. The focus is on the problems Kubernetes solves and how to operate a basic application on it, not on memorizing YAML.
+
+## Why it matters
+
+Running one container is easy. Running many containers across many machines, updating them without downtime, restarting failed ones, and routing traffic to healthy ones is hard. Kubernetes automates that work, and it is the common platform for production workloads. The Linux, Networking, Docker, and Cloud topics all apply: a Pod is a group of containers, a Service is a networking abstraction, and a node is a Linux machine.
+
+> **Goal:** understand why Kubernetes exists, what problems it solves, and how to operate a basic application on it.
+
+> Kubernetes should not be learned as a collection of YAML files. For every object, I should be able to say what problem it solves and what happens if it is missing.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain the problems orchestration solves and when Kubernetes is not worth its complexity
+- Explain the architecture: control plane, nodes, kubelet, API server, scheduler, and etcd
+- Explain the declarative model and the reconciliation loop
+- Run an application with Pods and Deployments
+- Expose it with Services and route external traffic with Ingress
+- Separate configuration with ConfigMaps and Secrets, and explain the limits of Secrets
+- Organize workloads with namespaces and labels
+- Configure liveness, readiness, and startup probes, and explain the difference
+- Set resource requests and limits, and explain what happens when they are exceeded
+- Scale manually and with autoscaling
+- Perform rolling updates and rollbacks
+- Use persistent storage for stateful workloads
+- Explain how Pod and Service networking works
+- Troubleshoot a failing workload using evidence
+
+---
+
+## Weekly progression
+
+| Week | Focus | Key objects and commands |
+|---|---|---|
+| 1 | Why Kubernetes exists, architecture, a local cluster, the declarative model | `kubectl get` `describe` `apply`, local cluster tool |
+| 2 | Pods and Deployments, labels, namespaces | `Pod` `Deployment` `Namespace`, `logs`, `exec` |
+| 3 | Services, Ingress, and Kubernetes networking | `Service` (ClusterIP, NodePort, LoadBalancer) `Ingress`, DNS |
+| 4 | Configuration and storage | `ConfigMap` `Secret` `PersistentVolume` `PersistentVolumeClaim` |
+| 5 | Health checks, resource requests and limits, scaling, rolling updates, rollback | probes, `HorizontalPodAutoscaler`, `rollout` |
+| 6 | Troubleshooting labs | `describe` `logs` `events` `top` `port-forward` |
+| 7 | Mini-project: deploy backend, database, and cache | |
+| 8 | Review, security basics, and comparison with Compose and cloud services | |
+
+This topic extends Stage 3 and Stage 5 of the main project: the Compose stack becomes a Kubernetes deployment.
+
+---
+
+## Checklist
+
+- [ ] Explain what orchestration solves
+- [ ] Explain control plane versus worker nodes
+- [ ] Explain the declarative model and the reconciliation loop
+- [ ] Run a local cluster
+- [ ] Explain a Pod and why it is rarely created directly
+- [ ] Create a Deployment and explain its relationship to ReplicaSets and Pods
+- [ ] Use labels and selectors
+- [ ] Use namespaces
+- [ ] Expose an application with a Service and explain each Service type
+- [ ] Route external HTTP traffic with Ingress
+- [ ] Explain how a Pod reaches a Service by name
+- [ ] Use a ConfigMap for configuration
+- [ ] Use a Secret and explain why it is not truly encrypted by default
+- [ ] Configure liveness and readiness probes and explain the difference
+- [ ] Set resource requests and limits and explain `OOMKilled`
+- [ ] Scale a Deployment manually and with autoscaling
+- [ ] Perform a rolling update and a rollback
+- [ ] Attach persistent storage to a database Pod
+- [ ] Explain why stateful workloads are harder
+- [ ] Debug `CrashLoopBackOff`, `ImagePullBackOff`, and `Pending` Pods
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## A troubleshooting method
+
+Work from the symptom toward the cause, using evidence:
+
+```text
+1. What is the Pod's state?          kubectl get pods
+2. Why is it in that state?          kubectl describe pod <name> (check Events)
+3. What does the application say?    kubectl logs <name> (and --previous after a crash)
+4. Can I get inside?                 kubectl exec -it <name> -- sh
+5. Is the Service selecting Pods?    kubectl get endpoints
+6. Can I reach it directly?          kubectl port-forward
+7. Is it a resource problem?         kubectl top, requests and limits
+```
+
+---
+
+## Exercises
+
+- [ ] Create a local cluster and deploy the backend image from the Docker topic
+- [ ] Delete a Pod managed by a Deployment and watch it come back, then explain why
+- [ ] Break the declared state (scale to zero, change the image) and watch reconciliation
+- [ ] Expose the backend through a Service and reach it from another Pod by name
+- [ ] Move configuration into a ConfigMap and a Secret, and change it without rebuilding the image
+- [ ] Add readiness and liveness probes and show the difference when each fails
+- [ ] Perform a rolling update to a new version, then roll it back
+- [ ] Set a low memory limit and make the Pod get `OOMKilled` on purpose
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **CrashLoopBackOff:** find out whether it is configuration, a missing dependency, or a failing probe
+- [ ] **ImagePullBackOff:** find the wrong image name, tag, or registry credentials
+- [ ] **Pending Pod:** find why it is not scheduled (resources, selector, volume)
+- [ ] **Service has no endpoints:** the Service selector does not match the Pod labels
+- [ ] **Traffic goes to a Pod that is not ready:** fix the missing or wrong readiness probe
+- [ ] **Bad rollout:** a new version fails, detect it and roll back
+- [ ] **Data loss:** a database Pod loses data on restart, add persistent storage correctly
+
+## Mini-project: Deploy backend, database, and cache
+
+The main project on Kubernetes, including:
+
+- Deployments for the backend, with several replicas, and for Redis
+- The database with persistent storage, and an explanation of when a managed database would be better
+- ConfigMaps and Secrets, with no real secrets in the repository
+- Services for internal traffic and an Ingress for external traffic
+- Liveness, readiness, and startup probes
+- Resource requests and limits on every container
+- A rolling update and a rollback demonstrated and documented
+- A README with an architecture diagram, how to run it, and how to debug it
+- An ADR comparing Kubernetes with Docker Compose and a managed container service for this project
+
+---
+
+## Resources
+
+- *Kubernetes in Action*: Marko Lukša
+- Official Kubernetes documentation and tutorials
+- Documentation of the local cluster tool chosen
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can deploy an application with configuration, storage, and probes without a tutorial
+- [ ] I can debug a failing Pod using evidence, not guessing
+- [ ] I can explain when Kubernetes is the wrong choice
+- [ ] The mini-project is deployed, documented, and includes a demonstrated rollback
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

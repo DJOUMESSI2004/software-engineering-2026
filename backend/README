@@ -1,0 +1,130 @@
+# Backend
+
+## What I am learning
+
+How to build serious backend services: HTTP APIs, authentication and authorization, validation, error handling, configuration, background work, caching, and testing.
+
+The technology depends on the stack chosen for the main project. The focus is on concepts that transfer between languages and frameworks.
+
+## Why it matters
+
+The backend is the core of the main project. Everything later (databases, Docker, CI/CD, cloud, security, observability) attaches to it. A backend that is clear, testable, and configurable is easy to deploy and debug. One that is not becomes a problem at every later stage.
+
+> **Goal:** build backend services that are understandable, testable, maintainable, and deployable.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain the request/response lifecycle, from socket to handler and back
+- Design a REST API with consistent resources, methods, status codes, and error formats
+- Validate input and return useful errors
+- Implement authentication and authorization correctly
+- Separate configuration from code and keep secrets out of the repository
+- Structure code with clear layers and dependency injection
+- Use middleware for cross-cutting concerns (logging, auth, error handling)
+- Run background jobs and explain asynchronous processing
+- Add caching and explain its trade-offs
+- Write unit and integration tests and document the API
+- Explain how the service behaves in production
+
+---
+
+## Weekly progression
+
+| Week | Focus |
+|---|---|
+| 1 | HTTP in depth, request lifecycle, first endpoints, routing |
+| 2 | REST design, validation, error handling, API documentation |
+| 3 | Authentication, authorization, password hashing, sessions or tokens |
+| 4 | Configuration, layering, dependency injection, middleware |
+| 5 | Testing: unit, integration, test data, running tests in isolation |
+| 6 | Background jobs, asynchronous processing, caching |
+| 7-8 | Mini-project: production-style REST API, review, and documentation |
+
+The databases topic runs in parallel from week 3. Stage 1 of the main project (client, backend, database) is built here.
+
+---
+
+## Checklist
+
+- [ ] Explain the HTTP request/response lifecycle
+- [ ] Choose correct methods and status codes
+- [ ] Design resource-oriented REST endpoints
+- [ ] Validate request input
+- [ ] Return consistent, useful error responses
+- [ ] Implement authentication (registration, login)
+- [ ] Hash passwords correctly
+- [ ] Implement authorization (roles or ownership checks)
+- [ ] Load configuration from environment variables
+- [ ] Keep secrets out of Git
+- [ ] Separate controllers, services, and data access
+- [ ] Use dependency injection
+- [ ] Write middleware (logging, auth, error handling)
+- [ ] Write unit tests
+- [ ] Write integration tests against the API
+- [ ] Run a background job
+- [ ] Add caching and explain invalidation
+- [ ] Generate or write API documentation
+- [ ] Add a health check endpoint
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Exercises
+
+- [ ] Write a tiny HTTP server using only the standard library to see the raw lifecycle
+- [ ] Build CRUD endpoints for one resource with proper status codes
+- [ ] Add validation and return a structured error for each failure type
+- [ ] Implement registration and login with hashed passwords
+- [ ] Protect an endpoint so only the owner or an admin can use it
+- [ ] Move all configuration to environment variables with sensible defaults
+- [ ] Write middleware that logs each request with a correlation ID
+- [ ] Write tests for one endpoint, including failure cases
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Works locally, fails elsewhere:** the service breaks when configuration changes, find the missing or wrong setting
+- [ ] **Unauthorized access:** find an endpoint that returns another user's data and fix the authorization gap
+- [ ] **Slow endpoint:** measure it, find the cause, and decide whether caching is the right fix
+- [ ] **Failing background job:** a job fails silently, make the failure visible and handle retries
+- [ ] **Flaky test:** find why a test passes or fails depending on order or data
+
+## Mini-project: Production-style REST API
+
+A REST API for part of the main project domain (for example users and products) that includes:
+
+- Authentication and role-based authorization
+- Input validation and consistent error responses
+- Configuration through environment variables, with no secrets in Git
+- Layered structure with dependency injection
+- Unit and integration tests, runnable with one command
+- A background job and a cached endpoint
+- A health check endpoint
+- API documentation
+- A README explaining the design, how to run it, and how to test it
+- An ADR for the main technology choices
+
+---
+
+## Resources
+
+- MDN Web Docs: HTTP
+- Official documentation of the chosen language and framework
+- OWASP Cheat Sheet Series (authentication, password storage, input validation)
+- *Designing Data-Intensive Applications*: Martin Kleppmann (for caching and async concepts, later chapters)
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can add a new endpoint with validation, auth, and tests without a tutorial
+- [ ] I can debug a basic failure using the debugging methodology
+- [ ] The mini-project is delivered with a README and documented decisions
+- [ ] I can explain each important component: what it does, why it exists, the alternatives, and what can go wrong
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

@@ -1,0 +1,128 @@
+# Architecture
+
+## What I am learning
+
+How to structure software so it can evolve: modularity, boundaries, dependency direction, and the trade-offs between monoliths, modular monoliths, microservices, and event-driven designs.
+
+## Why it matters
+
+Code that works today but cannot change tomorrow becomes expensive. Architecture is the set of decisions that are hard to reverse, so it pays to make them deliberately and to record why. This topic also protects against a common trap: splitting an application into microservices before understanding the cost.
+
+> **Goal:** structure systems that need to evolve, and explain the trade-offs behind each decision.
+
+> **Important principle:** microservices are not automatically better architecture. The project first shows that a modular monolith can be designed properly before any distributed service is introduced.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain coupling and cohesion, and recognize both in real code
+- Apply separation of concerns and the SOLID principles, and know when they are overkill
+- Explain dependency inversion and use it to isolate business logic from infrastructure
+- Compare layered, hexagonal, and clean architecture
+- Design a modular monolith with explicit module boundaries
+- Explain microservices, what they cost, and when they are justified
+- Explain event-driven architecture and its failure modes
+- Explain domain-driven design fundamentals: bounded contexts, entities, value objects, aggregates
+- Document a decision as an ADR with context, decision, alternatives, and consequences
+- Evaluate an existing design and identify its main architectural risks
+
+---
+
+## Weekly progression
+
+| Week | Focus |
+|---|---|
+| 1 | Modularity, coupling, cohesion, separation of concerns |
+| 2 | SOLID and dependency inversion with refactoring exercises |
+| 3 | Layered, hexagonal, and clean architecture |
+| 4 | Domain-driven design fundamentals and bounded contexts |
+| 5 | Modular monolith: design and refactor the main project into modules |
+| 6 | Microservices and event-driven architecture: costs, failure modes, and when to choose them |
+| 7 | Case studies and ADRs |
+| 8 | Review and architectural assessment of the main project |
+
+This topic covers Stage 2 of the main project (modular monolith). It runs alongside the System Design topic.
+
+---
+
+## Checklist
+
+- [ ] Explain coupling and cohesion with a code example of each
+- [ ] Apply separation of concerns to a mixed-responsibility module
+- [ ] Explain each SOLID principle and give a violation example
+- [ ] Apply dependency inversion to isolate business logic from the database
+- [ ] Explain layered architecture and its common failure (layer leakage)
+- [ ] Explain hexagonal architecture (ports and adapters)
+- [ ] Explain clean architecture and the dependency rule
+- [ ] Identify bounded contexts in a domain
+- [ ] Explain entities, value objects, and aggregates
+- [ ] Define module boundaries and a public interface for each module
+- [ ] Enforce boundaries (no module reaches into another's internals)
+- [ ] Explain the real costs of microservices (network, consistency, operations)
+- [ ] Explain event-driven architecture and eventual consistency
+- [ ] Write an ADR
+- [ ] Review a design and name its trade-offs and risks
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Exercises
+
+- [ ] Take a tangled function and separate its responsibilities, explaining each change
+- [ ] Refactor a class that violates two SOLID principles and justify each choice
+- [ ] Put an interface between business logic and the database, then swap the implementation in a test
+- [ ] Draw the dependency graph of a small codebase and find the cycles
+- [ ] Define bounded contexts for the e-commerce domain and list what each owns
+- [ ] Write three ADRs for decisions already made in earlier topics
+
+## Labs
+
+Each lab ends with a written note: situation, constraints, options, decision, consequences.
+
+- [ ] **Boundary violation:** one module reads another's tables directly, find it and introduce a proper interface
+- [ ] **Change request:** add a feature that touches three modules, measure how many files change, and decide if the design needs adjusting
+- [ ] **Cyclic dependency:** two modules depend on each other, break the cycle and justify how
+- [ ] **Premature split:** take a proposal to extract a microservice and argue for or against it with evidence
+- [ ] **Swap infrastructure:** replace the database or email provider behind an interface and measure the impact
+
+## Case studies
+
+Written analyses of real or realistic systems, stored in .
+
+- [ ] A company that moved from a monolith to microservices, and what it cost
+- [ ] A company that moved back, or chose a modular monolith deliberately
+- [ ] An event-driven system and how it handles duplicate or lost events
+- [ ] The main project's own architecture: strengths, risks, and what would trigger the next evolution
+
+Each case study covers: context, architecture, trade-offs, what failed or would fail, and what I would do differently.
+
+## Architecture Decision Records
+
+ADRs live in :
+
+
+
+Each ADR answers four questions: **Context**, **Decision**, **Alternatives**, **Consequences**. The goal is to show the reasoning, not only the technology name.
+
+---
+
+## Resources
+
+- *Fundamentals of Software Architecture*: Mark Richards and Neal Ford
+- *Clean Architecture*: Robert C. Martin
+- *Designing Data-Intensive Applications*: Martin Kleppmann
+- Documentation on ADRs and the C4 model for diagramming
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] The main project is a modular monolith with enforced module boundaries
+- [ ] At least four ADRs are written and reviewed
+- [ ] At least three case studies are written
+- [ ] I can argue for and against microservices for a given situation
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written

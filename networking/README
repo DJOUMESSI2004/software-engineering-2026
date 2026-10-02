@@ -1,0 +1,128 @@
+# Networking
+
+## What I am learning
+
+How applications communicate: addresses, ports, protocols, name resolution, encryption, and the intermediaries (proxies, load balancers, firewalls) that sit between a client and a server.
+
+## Why it matters
+
+Most production problems look like "service A cannot reach service B". Docker networks, cloud security groups, Kubernetes services, and TLS errors are all networking underneath. If I understand where a connection can fail, I can find the cause instead of guessing.
+
+> **Goal:** when an application cannot communicate with another system, understand where and why the communication fails.
+
+---
+
+## Learning objectives
+
+By the end of this topic I can:
+
+- Explain the TCP/IP model and what each layer is responsible for
+- Explain IP addresses, subnets, ports, and sockets
+- Explain TCP versus UDP and the TCP handshake
+- Trace what happens when a name is resolved with DNS
+- Explain the HTTP request/response cycle, methods, status codes, and headers
+- Explain how TLS secures a connection and what a certificate proves
+- Explain proxies, reverse proxies, load balancers, NAT, and firewalls
+- Explain what `localhost` and `0.0.0.0` mean and why binding matters
+- Debug a failing connection layer by layer with standard tools
+
+---
+
+## Weekly progression
+
+| Week | Focus | Key tools |
+|---|---|---|
+| 1 | TCP/IP model, IP addressing, subnets, ports, sockets, TCP/UDP | `ip` `ss` `ping` `traceroute` `nc` |
+| 2 | DNS and HTTP: resolution, records, requests, headers, status codes | `dig` `nslookup` `curl -v` `/etc/hosts` |
+| 3 | TLS, proxies, reverse proxies, load balancers, NAT, firewalls | `openssl s_client` `nginx` `iptables`/`nft` |
+| 4 | Troubleshooting labs and mini-project | `tcpdump` `curl` `ss` |
+
+---
+
+## Checklist
+
+- [ ] Explain the TCP/IP layers
+- [ ] Explain IP addresses and subnets (CIDR notation)
+- [ ] Explain ports and sockets
+- [ ] Explain TCP versus UDP
+- [ ] Explain the TCP three-way handshake
+- [ ] Resolve a name and explain each DNS step
+- [ ] Read common DNS records (A, AAAA, CNAME, MX, TXT)
+- [ ] Send HTTP requests by hand and read headers and status codes
+- [ ] Explain HTTP versus HTTPS and what TLS adds
+- [ ] Inspect a certificate and its chain
+- [ ] Explain forward proxy versus reverse proxy
+- [ ] Explain what a load balancer does
+- [ ] Explain NAT and why private addresses exist
+- [ ] Explain what a firewall rule does and write a simple one
+- [ ] Explain `localhost` versus `0.0.0.0` bindings
+- [ ] Capture and read traffic with `tcpdump`
+- [ ] Debug a failing connection layer by layer
+
+A box is ticked only when I can do or explain the task without relying entirely on a tutorial.
+
+---
+
+## Debugging a connection: a layer-by-layer method
+
+When a client cannot reach a server, work from the bottom up and stop at the first layer that fails:
+
+```text
+1. Is the name resolved?           dig / nslookup
+2. Is the host reachable?          ping / traceroute
+3. Is the port open and listening? ss -tlnp / nc -zv
+4. Is a firewall blocking it?      firewall rules / security groups
+5. Does TLS succeed?               openssl s_client / curl -v
+6. Does the application respond?   curl -v (status code, headers, body)
+```
+
+---
+
+## Exercises
+
+- [ ] Calculate the network, broadcast address, and usable hosts for three CIDR ranges by hand
+- [ ] Find which process listens on a given port and which ports are open on your machine
+- [ ] Resolve a domain with `dig` and explain each section of the output
+- [ ] Send a raw HTTP request with `nc` or `curl -v` and annotate the response
+- [ ] Inspect the certificate chain of a public HTTPS site
+- [ ] Add a name to `/etc/hosts` and observe how it overrides DNS
+- [ ] Start a server bound to `127.0.0.1`, then to `0.0.0.0`, and test access from another machine or container
+
+## Labs
+
+Each lab ends with a written note: symptom, evidence, hypothesis, root cause, fix, lesson.
+
+- [ ] **Wrong binding:** a service runs but is unreachable from outside, find out why
+- [ ] **DNS failure:** a name resolves to the wrong address or not at all, trace it
+- [ ] **Blocked port:** a firewall rule drops traffic, prove it with evidence
+- [ ] **Expired or mismatched certificate:** an HTTPS call fails, identify the exact TLS problem
+- [ ] **Reverse proxy misrouting:** configure nginx in front of an app and diagnose a 502 or 504
+
+## Mini-project: HTTP Diagnostic Tool
+
+A command-line tool (Bash or a language of choice) that, given a URL, reports each step of the connection:
+
+- DNS resolution and the resolved addresses
+- TCP connectivity to the port
+- TLS handshake result and certificate expiry
+- HTTP status code, key headers, and response time
+- A clear message on which layer failed
+
+Include a README and keep it versioned in Git with a clean history.
+
+---
+
+## Resources
+
+- *Computer Networking: A Top-Down Approach*: Kurose and Ross
+- *The Missing Semester of Your CS Education*
+- Linux manual pages for `ip`, `ss`, `dig`, `curl`, `tcpdump`
+- MDN Web Docs: HTTP
+
+## Completion criteria
+
+- [ ] I can explain every checklist item in my own words
+- [ ] I can debug a failing connection layer by layer without a tutorial
+- [ ] The mini-project is delivered with a README
+- [ ] I reviewed the key concepts without AI
+- [ ] Weekly reviews are written
